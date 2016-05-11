@@ -187,13 +187,15 @@ public class UnityPlugin {
 					String token = jsonObject.getString("token");
                     Purchase p;
                     if (jsonPurchaseInfo == null || jsonPurchaseInfo.equals("") || jsonPurchaseInfo.equals("null")) {
-                        UnityPlayer.UnitySendMessage(EVENT_MANAGER, CONSUME_PURCHASE_FAILED_CALLBACK, "Original json is invalid: " + json);
-                        return;
-                    } else {
-                        String itemType = jsonObject.getString("itemType");
-                        String signature = jsonObject.getString("signature");
-                        p = new Purchase(itemType, jsonPurchaseInfo, signature, appstoreName);
+                        JSONObject originalJsonObject = new JSONObject("{}");
+                        originalJsonObject.put("purchaseToken", token);
+                        originalJsonObject.put("productId", jsonObject.getString("sku"));
+                        jsonPurchaseInfo = originalJsonObject.toString();
                     }
+
+                    String itemType = jsonObject.getString("itemType");
+                    String signature = jsonObject.getString("signature");
+                    p = new Purchase(itemType, jsonPurchaseInfo, signature, appstoreName);
 					p.setPackageName(packageName);
 					p.setToken(token);
                     _helper.consumeAsync(p, _consumeFinishedListener);
