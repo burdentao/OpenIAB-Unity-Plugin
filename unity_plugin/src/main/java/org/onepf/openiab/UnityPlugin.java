@@ -53,6 +53,7 @@ public class UnityPlugin {
     private static final String PURCHASE_FAILED_CALLBACK = "OnPurchaseFailed";
     private static final String CONSUME_PURCHASE_SUCCEEDED_CALLBACK = "OnConsumePurchaseSucceeded";
     private static final String CONSUME_PURCHASE_FAILED_CALLBACK = "OnConsumePurchaseFailed";
+    private static final String OPENIAB_DESTROY_CALLBACK = "OnOpenIABDestroyed";
 
     public static final int RC_REQUEST = 10001; /**< (arbitrary) request code for the purchase flow */
     public static boolean sendRequest = false;
@@ -134,6 +135,11 @@ public class UnityPlugin {
             _helper = null;
         }
         destroyBroadcasts();
+    }
+
+    public void onOpenIABDestroyed()
+    {
+        UnityPlayer.UnitySendMessage(EVENT_MANAGER, OPENIAB_DESTROY_CALLBACK, "");
     }
 
     public boolean areSubscriptionsSupported() {

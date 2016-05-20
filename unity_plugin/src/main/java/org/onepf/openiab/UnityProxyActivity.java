@@ -73,6 +73,8 @@ public class UnityProxyActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
+
+        UnityPlugin.instance().onOpenIABDestroyed();
     }
     
     @Override
