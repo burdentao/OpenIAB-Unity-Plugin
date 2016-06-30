@@ -33,16 +33,19 @@ import org.onepf.oms.appstore.googleUtils.IabResult;
 public class UnityProxyActivity extends Activity {
     static final String ACTION_FINISH = "org.onepf.openiab.ACTION_FINISH";
     private BroadcastReceiver broadcastReceiver;
+    private static boolean isDestroyedByFinish;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        isDestroyedByFinish = false;
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Log.d(UnityPlugin.TAG, "Finish broadcast was received");
                 if (!UnityProxyActivity.this.isFinishing()) {
+                    isDestroyedByFinish = true;
                     finish();
                 }
             }
@@ -74,7 +77,9 @@ public class UnityProxyActivity extends Activity {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
 
-        UnityPlugin.instance().onOpenIABDestroyed();
+        if (!isDestroyedByFinish) {
+            UnityPlugin.instance().onOpenIABDestroyed();
+        }
     }
     
     @Override
