@@ -309,9 +309,7 @@ public class UnityPlugin {
 
         json.key("purchaseMap").array();
         for (Purchase purchase : inventory.getAllPurchases()) {
-            json.object();
             json.value(purchaseToJson(purchase));
-            json.endObject();
         }
         json.endArray();
 
