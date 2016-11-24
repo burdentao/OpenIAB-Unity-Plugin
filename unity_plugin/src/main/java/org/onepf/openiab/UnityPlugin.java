@@ -307,12 +307,11 @@ public class UnityPlugin {
     private String inventoryToJson(Inventory inventory) throws JSONException {
         JSONStringer json = new JSONStringer().object();
 
-        json.key("purchaseMap").array();
-        for (Map.Entry<String, Purchase> entry : inventory.getPurchaseMap().entrySet()) {
-            json.array();
-            json.value(entry.getKey());
-            json.value(purchaseToJson(entry.getValue()));
-            json.endArray();
+        json.key("purchaseList").array();
+        for (Purchase purchase : inventory.getAllPurchases()) {
+            json.object();
+            json.value(purchaseToJson(purchase));
+            json.endObject();
         }
         json.endArray();
 
