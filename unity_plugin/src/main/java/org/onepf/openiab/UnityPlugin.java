@@ -339,6 +339,7 @@ public class UnityPlugin {
                 .key("packageName").value(purchase.getPackageName())
                 .key("sku").value(purchase.getSku())
                 .key("purchaseTime").value(purchase.getPurchaseTime())
+                .key("cancelTime").value(purchase.getCancelTime())
                 .key("purchaseState").value(purchase.getPurchaseState())
                 .key("developerPayload").value(purchase.getDeveloperPayload())
                 .key("token").value(purchase.getToken())
